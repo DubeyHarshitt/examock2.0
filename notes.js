@@ -1,0 +1,36 @@
+// # Frontend  - React with Vite and Tailwind CSS
+
+// Tailwind Installation 
+// npm create vite@latest client -- --template react 
+// cd client
+// npm install
+// npm install tailwindcss @tailwindcss/vite
+
+//  vite.config.ts 
+
+// import { defineConfig } from 'vite'
+// import tailwindcss from '@tailwindcss/vite'
+// export default defineConfig({
+//   plugins: [
+//     tailwindcss(),
+//   ],
+// })
+
+// @import "tailwindcss"; -> index.css
+
+// TODO: npm install react-router-dom ( Used for client side routing)
+
+
+
+
+
+
+// -----------------------------------------------------------------------------------------------------------------------
+
+// # Backend - Express with Javascript
+
+// TODO: server
+
+// npm init -y
+// npm install express cors dotenv mongoose bcryptjs jsonwebtoken multer (not used yet)
+// npm install express mongoose passport passport-google-oauth20 express-session dotenv (used for Google OAuth)
