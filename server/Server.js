@@ -1,10 +1,13 @@
 import express from 'express';
 import connectDB from './DbConnection.js';
 import cors from 'cors';
-import googleRouter from './Routes/googleRoutes.js';
 import './Auth/google.js'; // Ensure Google authentication is set up
 import session from "express-session";  
 import passport from "passport";
+
+// Importing Routes
+import googleAuth from './Routes/googleRoutes.js';
+import userAuth from './Routes/authRoutes.js'
 
 
 const app = express(); 
@@ -30,7 +33,9 @@ app.use(passport.session());
 
 
 // Define routes
-app.use('/', googleRouter); // Use the Google authentication routes
+app.use('/', googleAuth); // Use the Google authentication routes
+app.use('/api', userAuth)
+
 
 
 app.listen(process.env.PORT || 3000, () => {

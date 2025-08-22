@@ -16,11 +16,8 @@ const userSchema = new mongoose.Schema({
         type :String,
         // required: true,
     },
-    mobileNo: {
-        type: String,
-        // required: true,
-        // unique: true, 
-    },
+    mobileNo: { type: String },
+
     exam_id : {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Exam"
