@@ -1,4 +1,5 @@
 import User from "../Models/User.model.js";
+import bcrypt from "bcryptjs";
 
 import generateAccessToken from '../Helper/accessToken.js'
 import generateRefreshToken from '../Helper/refreshToken.js'
@@ -14,6 +15,7 @@ const registerUser = async (req, res) => {
       return res
         .status(400)
         .json({ success: false, message: "Email and password are required" });
+        console.log("Email and password are required");
     }
 
     let user = await User.findOne({ email });
@@ -29,6 +31,8 @@ const registerUser = async (req, res) => {
       const payload = { id: user._id, email: user.email };
       const accessToken = generateAccessToken(payload);
       const refreshToken = generateRefreshToken(payload);
+        // console.log("accessToken  :-  "+accessToken);
+        // console.log("refreshToken  :-  "+refreshToken);
 
       return res.status(200).json({
         success: true,
@@ -39,6 +43,7 @@ const registerUser = async (req, res) => {
       });
     } else {
       // ---- REGISTER FLOW ----
+      // Hash the password before saving
       const hashedPassword = await bcrypt.hash(password, 10);
 
       user = new User({ email, password: hashedPassword });
@@ -52,6 +57,7 @@ const registerUser = async (req, res) => {
       });
     }
   } catch (error) {
+    console.error("Error in registerUser:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };

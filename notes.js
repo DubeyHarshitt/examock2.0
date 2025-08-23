@@ -19,6 +19,8 @@
 // @import "tailwindcss"; -> index.css
 
 // TODO: npm install react-router-dom ( Used for client side routing)
+// npm i axios
+// npm install jwt-decode
 
 
 

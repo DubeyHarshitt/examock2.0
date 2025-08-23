@@ -1,30 +1,49 @@
-import React from 'react'
-// import ExamockLogo from '..Images/logo.jpegg';
+import React from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "../Helper/isAuthenticated";
 
 const LoginPage = () => {
-
+  const navigate = useNavigate();
   //--------------------------------------------------
 
   const handleGoogleLogin = () => {
     console.log("Initiating Google login...");
-    window.location.href = 'http://localhost:3000/auth/google';
+    window.location.href = "http://localhost:3000/auth/google";
   };
 
   //--------------------------------------------------
 
-  const handleEmailLogin = (e) => {
-    e.preventDefault();
-    // Handle email/password login logic here
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    console.log("Email:", email, "Password:", password);
-    // You can send this data to your backend for authentication
-    // Example: axios.post('/api/login', { email, password })
-    
-    // Reset the form
-    e.target.reset();
-    
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
+
+  // ----------------------------------------------------
+  const handleEmailLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await axios.post("http://localhost:3000/api/auth/user", formData, { withCredentials: true });
+    console.log("Login successful:", response.data);
+
+    // maybe save token or redirect here
+    localStorage.setItem("Access Token", response.data.accessToken);
+    // window.location.href = "/";
+    // navigate("/");
+
+  } catch (error) {
+    console.error("Login failed:", error.response?.data || error.message);
+  }
+};
 
   //------------------------------------------------------
 
@@ -32,30 +51,44 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 border-rounded-lg shadow-md">
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
         {/* <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">{ExamockLogo}</h1> */}
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">Login Form</h1>
-        <h2 className="text-2xl font-semibold mb-6 text-gray-700">Welcome back</h2>
+        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
+          Login Form
+        </h1>
+        <h2 className="text-2xl font-semibold mb-6 text-gray-700">
+          Welcome back
+        </h2>
 
         {/* Email/Password Login */}
         <form onSubmit={handleEmailLogin} className="space-y-4 mb-6">
           <div>
-            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
               Email
             </label>
             <input
               type="email"
+              name="email"
               id="email"
+              onChange={handleChange}
               placeholder="Email"
               className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
               Password
             </label>
             <input
               type="password"
+              name="password"
               id="password"
+              onChange={handleChange}
               placeholder="Password"
               className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
@@ -78,7 +111,6 @@ const LoginPage = () => {
 
         {/* Social Logins */}
         <div className="space-y-4">
-
           <button
             className="w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200"
             onClick={handleGoogleLogin}
@@ -96,11 +128,10 @@ const LoginPage = () => {
             </svg>
             Login with Google
           </button>
-          
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
