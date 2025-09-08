@@ -36,3 +36,13 @@
 // npm init -y
 // npm install express cors dotenv mongoose bcryptjs jsonwebtoken multer (not used yet)
 // npm install express mongoose passport passport-google-oauth20 express-session dotenv (used for Google OAuth)
+
+
+// -----------------------------------------------------------------------------------------------------------------------
+
+// # That’s it! Daily workflow is basically:
+
+// git status → see changes
+// git add . → stage changes
+// git commit -m "message" → commit
+// git push origin main → push to GitHub

@@ -1,8 +1,8 @@
 import User from "../Models/User.model.js";
 import bcrypt from "bcryptjs";
 
-import generateAccessToken from '../Helper/accessToken.js'
-import generateRefreshToken from '../Helper/refreshToken.js'
+import generateAccessToken from '../Helper/accessToken.js';
+import generateRefreshToken from '../Helper/refreshToken.js';
 
 const registerUser = async (req, res) => {
 
@@ -47,6 +47,7 @@ const registerUser = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       user = new User({ email, password: hashedPassword });
+      // await User.collection.dropIndex("user_id_1");
       await user.save();
 
       return res.status(201).json({

@@ -29,21 +29,30 @@ const LoginPage = () => {
 
   // ----------------------------------------------------
   const handleEmailLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await axios.post("http://localhost:3000/api/auth/user", formData, { withCredentials: true });
-    console.log("Login successful:", response.data);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/user",
+        formData,
+        { withCredentials: true }
+      );
+      console.log("Login successful:", response.data.action);
 
-    // maybe save token or redirect here
-    localStorage.setItem("Access Token", response.data.accessToken);
-    // window.location.href = "/";
-    // navigate("/");
-
-  } catch (error) {
-    console.error("Login failed:", error.response?.data || error.message);
-  }
-};
+      // maybe save token or redirect here
+      localStorage.setItem("Access Token", response.data.accessToken);
+      // window.location.href = "/";
+      if (response.data.action === "register") {
+        // First-time signup: redirect to onboarding form
+        navigate("/admission-form", { replace: true });
+      } else if (response.data.action === "login") {
+        // Existing user: go to dashboard
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      console.error("Login failed:", error.response?.data || error.message);
+    }
+  };
 
   //------------------------------------------------------
 

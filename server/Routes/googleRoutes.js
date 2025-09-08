@@ -16,9 +16,14 @@ router.get("/auth/google",
 router.get("/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
-    // ✅ Send token or redirect to frontend
-    res.redirect("http://localhost:5173?login=success");
+    // req.user comes from the strategy
+    if (req.user._isNew) {
+      res.redirect("http://localhost:5173/admission-form");
+    } else {
+      res.redirect("http://localhost:5173/dashboard");
+    }
   }
 );
 
 export default router;
+

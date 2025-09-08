@@ -1,14 +1,16 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './Helper/ProtectedRoute';
 import LoginPage from './Pages/LoginPage';
 import Dashboard from './Student/dashboard';
-import ProtectedRoute from './Helper/ProtectedRoute';
+import AdmissionForm from './Pages/AdmissionForm';
 
 const PageManager = () => {
   return (
     <Routes>
       {/* Public Route */}
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/admission-form" element={ <AdmissionForm/>} />
       
       {/* Private Route */}
       <Route path="/" element={<ProtectedRoute> <div>Home</div> </ProtectedRoute>} />
