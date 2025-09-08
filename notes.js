@@ -45,4 +45,5 @@
 // git status → see changes
 // git add . → stage changes
 // git commit -m "message" → commit
+// git pull origin main → pull from GitHub (optional, if working in a team)
 // git push origin main → push to GitHub
