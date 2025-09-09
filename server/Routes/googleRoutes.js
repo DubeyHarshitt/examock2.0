@@ -16,12 +16,11 @@ router.get("/auth/google",
 router.get("/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
-    // req.user comes from the strategy
-    if (req.user._isNew) {
-      res.redirect("http://localhost:5173/admission-form");
-    } else {
-      res.redirect("http://localhost:5173/dashboard");
+    // Decide where to redirect based on user flag
+    if (!req.user.isEnrolled) {
+      return res.redirect("http://localhost:5173/admission-form");
     }
+    res.redirect("http://localhost:5173/dashboard");
   }
 );
 

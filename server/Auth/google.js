@@ -61,17 +61,16 @@ passport.use(new GoogleStrategy(
       let user = await User.findOne({ email });
 
       if (user) {
-        // Existing user → mark as not new
-        user._isNew = false;
+        // Existing user
         return done(null, user);
       }
 
-      // New user → create and mark as new
+      // New user → create with onboarding flag
       const newUser = await User.create({
-        email: profile.emails[0].value,
-        isOnboarded: false, // optional field for tracking onboarding
+        email: email,
+        name: profile.displayName,
+        isEnrolled: false // 👈 track if admission form completed
       });
-      newUser._isNew = true;
 
       return done(null, newUser);
 
