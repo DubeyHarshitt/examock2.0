@@ -21,6 +21,8 @@
 // TODO: npm install react-router-dom ( Used for client side routing)
 // npm i axios
 // npm install jwt-decode
+// npm install --save react-toastify
+// npm install lucide-react
 
 
 

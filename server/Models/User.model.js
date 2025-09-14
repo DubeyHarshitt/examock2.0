@@ -11,17 +11,14 @@ const userSchema = new mongoose.Schema({
     // required: true,
   },
   name: { type: String },
-
-  mobileNo: { type: String },
-
   isEnrolled: {
     type: Boolean,
     default: false,
   },
 
-  exam_id: {
+  subject_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Exam",
+    ref: "Subject",
   },
   registration_date: {
     type: Date,

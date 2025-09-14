@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import jwt from 'jsonwebtoken'
 
 const router = express.Router();
 
@@ -16,11 +17,17 @@ router.get("/auth/google",
 router.get("/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
+    const token = jwt.sign(
+      { id: req.user._id, email: req.user.email, isEnrolled: req.user.isEnrolled },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
     // Decide where to redirect based on user flag
     if (!req.user.isEnrolled) {
       return res.redirect("http://localhost:5173/admission-form");
+    }else{
+    res.redirect(`http://localhost:5173/dashboard?token=${token}`);
     }
-    res.redirect("http://localhost:5173/dashboard");
   }
 );
 
